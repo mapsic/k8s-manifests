@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thanos-querier
+  namespace: ops
+  labels:
+    app: thanos-querier
+spec:
+  selector:
+    matchLabels:
+      app: thanos-querier
+  template:
+    metadata:
+      labels:
+        app: thanos-querier
+    spec:
+      containers:
+      - name: thanos-querier
+        image: quay.io/thanos/thanos:v0.12.2
+        args:
+          - query
+          - --query.replica-lable=replica
+          - --store=dnssrv+thanos-store-gateway:10901
+        ports:
+        - name: http
+          containerPort: 10902
+        - name: grpc
+          containerPort: 10901
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+          requests:
+            memory: "125Mi"
+            cpu: "125m"
+        livenessProbe:
+          httpGet:
+            path: /-/healthy
+            port: http
+          initialDelaySeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /-/healthy
+            port: http
+         initialDelaySeconds: 15
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  name: thanos-querier
+  namespace: ops
+  labels:
+    app: thanos-querier
+spec:
+  selector:
+    app: thanos-querier
+  ports:
+  - name: http
+    port: 9090
+    targetPort: http
+--- 
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  name: thanos
+  namespace: ops
+spec:
+  rules:
+  - host: thanos.mapsic.cn
+    http:
+      paths:
+      - backend:
+          serviceName: thanos-querier
+          servicePort: 9090
+        path: /
+  tls:
+  - hosts:
+    - thanos.mapsic.cn
+    secretName: monitor-general-tls
+
