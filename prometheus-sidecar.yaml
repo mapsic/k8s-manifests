@@ -35,7 +35,7 @@ spec:
           args:
             - --config.file=/etc/prometheus-shared/prometheus.yaml
             - --storage.tsdb.path=/prometheus
-            - --storage.tsdb.retention=6h
+            - --storage.tsdb.retention.time=6h
             - --storage.tsdb.no-lockfile
             - --storage.tsdb.min-block-duration=2h # Thanos处理数据压缩
             - --storage.tsdb.max-block-duration=2h
