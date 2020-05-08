@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-rules
+  namespace: ops
+data:
+  alert-rules.yaml: |-
+    groups:
+      - name: Deployment 
+        rules:
+        - alert: Depolyment at 0 Replicas 
+          annotations:
+            message: Deployment {{$labels.deployment}} in {{$labels.namespace}} is currently having no pods running
+          expr: sum(kube_deployment_status_replicas) by (deployment,namespace) < 1
+          for: 1m
+          labels:
+            team: node
