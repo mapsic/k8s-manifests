@@ -1,5 +1,5 @@
-apiversion: apps/v1
-kind: Statefulset
+apiVersion: apps/v1
+kind: StatefulSet
 metadata:
   name: thanos-store-gateway
   namespace: ops
