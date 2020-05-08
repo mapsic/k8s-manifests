@@ -28,6 +28,9 @@ spec:
             name: prometheus-rules
         - name: prometheus-config-shared
           emptyDir: {}
+        - name: object-storage-config
+          secret:
+            secretName: thanos-objectstorage
       containers:
         - name: prometheus
           image: prom/prometheus:v2.16.0
@@ -115,6 +118,8 @@ spec:
               mountPath: /etc/prometheus/rules 
             - name: data 
               mountPath: /prometheus   
+            - name: object-storage-config
+              mountPath: /etc/secret
   updateStrategy:
     type: RollingUpdate
   volumeClaimTemplates:
