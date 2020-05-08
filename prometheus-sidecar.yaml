@@ -87,7 +87,7 @@ spec:
             - --tsdb.path=/prometheus
             - --prometheus.url=http://localhost:9090
             - --reloader.config-file=/etc/prometheus/prometheus.yaml.tmpl
-            - --reloader.config-envsubset-file=/etc/prometheus-shared/prometheus.yaml
+            - --reloader.config-envsubst-file=/etc/prometheus-shared/prometheus.yaml
             - --reloader.rule-dir=/etc/prometheus/rules/
           ports:
             - name: http-sidecar

@@ -23,4 +23,3 @@ data:
         path_prefix: / 
         static_configs:
         - targets: ['monitor-prometheus-operato-alertmanager.prometheus:9093']
-
