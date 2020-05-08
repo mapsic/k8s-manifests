@@ -19,7 +19,7 @@ spec:
         image: quay.io/thanos/thanos:v0.12.2
         args:
           - query
-          - --query.replica-lable=replica
+          - --query.replica-label=replica
           - --store=dnssrv+thanos-store-gateway:10901
         ports:
         - name: http
