@@ -21,10 +21,10 @@ spec:
       serviceAccountName: prometheus
       volumes:
         - name: prometheus-config 
-          configmap:
+          configMap:
             name: prometheus-config
         - name: prometheus-rules
-          configmap:
+          configMap:
             name: prometheus-rules
         - name: prometheus-config-shared
           emptyDir: {}
