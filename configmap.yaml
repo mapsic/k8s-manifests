@@ -8,7 +8,7 @@ data:
     global:
       scrape_interval: 15s
       scrape_timeout: 15s
-      external_lables:
+      external_labels:
         cluster: ops-test
         replica: ${POD_NAME} # 每个 Prometheus 有一个唯一的标签
     rule_files:
@@ -22,5 +22,5 @@ data:
       - scheme: http
         path_prefix: / 
         static_configs:
-        - taggets: ['alertmanager:9093']  
+        - targets: ['monitor-prometheus-operato-alertmanager.prometheus:9093']
 
