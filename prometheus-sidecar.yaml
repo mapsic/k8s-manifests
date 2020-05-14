@@ -31,6 +31,9 @@ spec:
         - name: object-storage-config
           secret:
             secretName: thanos-objectstorage
+        - name: tracing-config
+          secret:
+            secretName: tracing-config
       containers:
         - name: prometheus
           image: prom/prometheus:v2.16.0
@@ -93,6 +96,7 @@ spec:
             - --reloader.config-envsubst-file=/etc/prometheus-shared/prometheus.yaml
             - --reloader.rule-dir=/etc/prometheus/rules/
             - --objstore.config-file=/etc/secret/thanos.yaml
+            - --tracing.config-file=/etc/tracing/jaeger.yaml
           ports:
             - name: http-sidecar
               containerPort: 10902
@@ -121,6 +125,8 @@ spec:
               mountPath: /prometheus   
             - name: object-storage-config
               mountPath: /etc/secret
+            - name: tracing-config
+              mountPath: /etc/tracing
   updateStrategy:
     type: RollingUpdate
   volumeClaimTemplates:
