@@ -15,5 +15,5 @@ config:
   endpoint: ""
   user: ""
   password: ""
-  agent_host: "jaeger-collector:14268'"
+  agent_host: "jaeger-collector"
   agent_port: 0
